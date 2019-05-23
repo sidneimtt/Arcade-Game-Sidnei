@@ -1,4 +1,24 @@
 
+// Whole-script strict mode syntax
+'use strict';
+
+
+var config = {
+       "player": {
+            "initial_X": 200,
+            "initial_Y": 400
+      },
+       "enemySize": {
+            "s_width": 60,
+            "s_height": 60
+       },
+       "playerSize": {
+            "s_width": 60,
+            "s_height": 60
+       }
+}
+
+
 // Enemies our player must avoid
 var Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
@@ -7,8 +27,8 @@ var Enemy = function(x, y, speed) {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.speed = speed;
-    this.width = 60;
-    this.height = 60;
+    this.width = config.enemySize.s_width;
+    this.height = config.enemySize.s_height;
     this.x = x;
     this.y = y;
 };
@@ -41,10 +61,10 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function(x, y) {
     this.sprite =  'images/char-cat-girl.png'; /// player 
-    this.width = 60;
-    this.height = 60;
-    this.x = 200;
-    this.y = 400;
+    this.width = config.playerSize.s_width;
+    this.height = config.playerSize.s_height;
+    this.x = config.player.initial_X;
+    this.y = config.player.initial_Y;
 };
 
 
@@ -54,13 +74,13 @@ Player.prototype.handleInput = function(key) {
 if (key === 'left' && this.x > 10) {
         this.x -= 100;
         console.log("current player X position is " + this.x);
-    } else if (key === 'right' && this.x < 401){
+    }  else if (key === 'right' && this.x < 400){
         this.x += 100;
         console.log("current player X position is " + this.x);
     }  else if (key === 'up' && this.y > 10){
         this.y -= 85;
         console.log("current player Y position is " + this.y);
-    } else if (key === 'down' && this.y < 320){
+    }  else if (key === 'down' && this.y < 320){
         this.y += 85;
         console.log("current player Y position is " + this.y);
     }
@@ -73,7 +93,7 @@ Player.prototype.update = function(dt) {
     if( this.y < 10) {
         swooshingP.play();
         swooshingP.play();
-        this.reset(200,400);
+        this.reset(config.player.initial_X, config.player.initial_Y);
     }
     //Check the X and Y position of the player to see if there is any collision and play a sound.
     var enemiesLenght = allEnemies.length;
@@ -82,7 +102,7 @@ Player.prototype.update = function(dt) {
         if (this.x < enemy.x + enemy.width && this.x + this.width > enemy.x && this.y < enemy.y + enemy.height && this.height + this.y > enemy.y) {
             hitP.play();
             dieP.play();
-            this.reset(200,400);
+            this.reset(config.player.initial_X, config.player.initial_Y);
         }
     };
 };
@@ -170,46 +190,4 @@ swooshingP.src = "audio/sfx_swooshing.wav";
 
 const dieP = new Audio();
 dieP.src = "audio/sfx_die.wav";
-
-
-
-
-/*
-TESTES DA FUNÇAO EVENT LISTENER COM ESCOLHA DO JOGADOR / TESTADO NO CONSOLE DO JAVASCRIPT NO CHROME,
-CARREGADO A FUNCÃO EVENTOS(); E DEPOIS CLICKANDO NOS PLAYER PARA VER SE MUDAVA...NO HTML ...
-
-function eventos() {
-    $(".c1").on('click', function(evt) {
-        var player1 = $(evt.target);
-        var paX1 = $(evt.pageX);
-        var paY1 = $(evt.pageY);
-      //  document.getElementById("demo").innerHTML = player1;
-    $("#log").text( "pageX: " + evt.pageX + ", pageY: " + evt.pageY + "Player:" + evt.target + "VALOR PASSADO:" + player1);
-        checkPlayer(player1, paX1, paY1);
-    });
-};
-
-
-
-function checkPlayer(playe, paX, paY) {
-     //var x = document.getElementById("c1").classList;
-     //document.getElementById("demo").innerHTML = x;
-     var playEvt = playe[0].classList;
-     document.getElementById("demo").innerHTML = playEvt;
-    if ( playEvt == "cboy") {
-            player.sprite = 'images/char-boy.png';
-    } else if ( playEvt == "ccat") {
-            player.sprite = 'images/char-cat-girl.png';
-    } else if ( playEvt == "cprin") {
-            player.sprite = 'images/char-princess-girl.png';
-    } else if ( playEvt == "chorn") {
-            player.sprite = 'images/charho.png';
-    } else if ( playEvt == "cpink") {
-            player.sprite = 'images/char-pink-girl.png';
-    }
-    $("#log2").text( "pageX: " + paX + ", pageY: " + paY + "Player NEW:" + player.sprite );
-    return;
-};
-
-*/
 

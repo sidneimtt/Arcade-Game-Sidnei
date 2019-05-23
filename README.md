@@ -1,7 +1,6 @@
 # Classic Arcade Game Clone Project
 
 ## Table of Contents
-
 - [Instructions](#instructions)
 
 ## Game Objective
